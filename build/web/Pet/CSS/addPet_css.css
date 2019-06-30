@@ -1,0 +1,28 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jun 17, 2019, 5:43:31 PM
+    Author     : 99hai
+*/
+.add-pet-container{
+    background-image: url("../../Img/background-viewPet.jpg");
+    height: 100vh;
+    background-size: cover;
+    position: relative;
+    padding:50px;
+    
+}
+
+.form-add-pet{
+    width:500px;
+    height: 550px;
+    background-color: rgba(0,0,0,0.5);
+    left:30%;
+    top:10%;
+    color:white;
+    padding:30px;
+    position: absolute;
+}

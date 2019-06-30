@@ -1,0 +1,60 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jun 17, 2019, 5:43:31 PM
+    Author     : 99hai
+*/
+.container-pet{
+    background-image: url("../../Img/background-viewPet.jpg");
+    height: 100vh;
+    background-size: cover;
+    position: relative;
+    padding:50px;
+
+}
+
+.form-Update-user{
+    width:500px;
+    height: 550px;
+    background-color: rgba(0,0,0,0.5);
+    left:30%;
+    top:10%;
+    color:white;
+    padding:30px;
+    position: absolute;
+}
+
+.box-Order{
+    color:white;    
+    width:450px;
+    height:500px;
+    background-color: rgba(0,0,0,0.5);
+    position: absolute;
+    left:100px;
+    overflow: auto;
+    padding: 10px;
+}
+
+.item-Order{
+    width:380px;
+    height:150px;
+    background-color: rgba(255,255,255,0.5);
+    margin-bottom: 5px;
+    padding:10px;
+    position: relative;
+}
+.button-detail{
+    position: absolute;
+    right: 10px;
+    top:20px;
+}
+
+.box-service{
+    width:500px;
+    background-color: white;
+    position: absolute;
+    right:20%;
+}
