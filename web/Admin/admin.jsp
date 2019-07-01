@@ -109,7 +109,7 @@
                             <div class="row mb-3">
                                 <div class="col">
                                     <div class="input-group">
-                                        <form action="MainControllerAdmin" method="POST">
+                                        <form action="SearchAccessoryController" method="POST">
                                             <input type="text" class="form-control" placeholder="Search By Name Product" name="txtSearch">
                                             <input type="submit" class="btn btn-outline-success"  value="Search"/>
                                         </form>
