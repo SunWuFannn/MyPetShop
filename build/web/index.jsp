@@ -68,7 +68,7 @@
                     </c:if>
                     <c:if test="${sessionScope.FULLNAME != null}">
                         <li class="nav-item active">
-                            <a class="nav-link" href="LoadAllOrderUserController">view your history crash</a>
+                            <a class="nav-link" href="LoadAllOrderUserController?idPage=1">view your history crash</a>
                         </li>
                     </c:if>
                 </ul>

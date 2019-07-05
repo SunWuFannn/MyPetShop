@@ -24,25 +24,25 @@
         <div class="container-login">
             <div class="myform">
                 <center><h3>Register</h3></center>
-                <form action="/PETWATER/MainController" method="POST" accept-charset="ISO-8859-1">
+                <form action="/PETWATER/RegisterController?state=user" method="POST" accept-charset="ISO-8859-1">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Username</label>
-                        <input type="text" class="form-control" name="txtUsername" placeholder="Enter Username">
+                        <input type="text" class="form-control" name="txtUsername" placeholder="Enter Username" required="true">
                         <font color="red">${requestScope.ERROR_ACCOUNT.errorUsername}</font>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Password</label>
-                        <input type="password" class="form-control" name="txtPassword" placeholder="Password">
+                        <input type="password" class="form-control" name="txtPassword" placeholder="Password" required="true">
                         <font color="red">${requestScope.ERROR_ACCOUNT.errorPassword}</font>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Confirm Password</label>
-                        <input type="password" class="form-control" name="txtPasswordConfirm" placeholder="Confirm Password">
+                        <input type="password" class="form-control" name="txtPasswordConfirm" placeholder="Confirm Password" required="true">
                         <font color="red">${requestScope.ERROR_ACCOUNT.errorPasswordConfirm}</font>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Fullname</label>
-                        <input type="text" class="form-control" name="txtFullname" placeholder="Fullname" >
+                        <input type="text" class="form-control" name="txtFullname" placeholder="Fullname" required="true">
                         <font color="red">${requestScope.ERROR_ACCOUNT.errorFullname}</font>
                     </div>
                     <input type="submit" class="btn btn-primary" name="action" value="Register" >

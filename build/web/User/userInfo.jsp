@@ -69,14 +69,14 @@
         <div class="container-pet">
             <div class="form-Update-user">
                 <form action="UpdateUserController" method="POST" accept-charset="ISO-8859-1">
-                    <p>Username </p><input type="text" name="txtUsername" readonly="true" value="${sessionScope.USERNAME}"/><br/>
-                    <p>Fullname</p><input type="text" name="txtFullname" value="${requestScope.USER.fullname}" /><br/>
+                    <p>Username </p><input type="text" name="txtUsername" readonly="true" value="${sessionScope.USERNAME}" required="true"/><br/>
+                    <p>Fullname</p><input type="text" name="txtFullname" value="${requestScope.USER.fullname}" required="true"/><br/>
                     <font color="red">${requestScope.ERROR_ACCOUNT.errorFullname}</font>  <br/>
-                    <p>Phone</p><input type="text" name="txtPhone" value="${requestScope.USER.phone}" /><br/>
+                    <p>Phone</p><input type="text" name="txtPhone" value="${requestScope.USER.phone}" required="true"/><br/>
                     <font color="red">${requestScope.ERROR_ACCOUNT.errorPhone}</font>  <br/>
-                    <p>Role</p><input type="text" name="txtRole" readonly="true" value="${sessionScope.ROLE}" /> 
+                    <p>Role</p><input type="text" name="txtRole" readonly="true" value="${sessionScope.ROLE}" required="true"/> 
                     <br/>                  
-                    <p>Address </p> <input type="text" name="txtAddress" value="${requestScope.USER.address}"/>
+                    <p>Address </p> <input type="text" name="txtAddress" value="${requestScope.USER.address}" required="true"/>
                     <br/>
                     <font color="red">${requestScope.ERROR_ACCOUNT.errorAddress}</font>  <br/>
                     <br/>

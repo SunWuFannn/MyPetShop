@@ -42,7 +42,9 @@ public class LoadAllOrderUserController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
+            int newCount;
             HttpSession session = request.getSession();
+            int idPage = Integer.parseInt(request.getParameter("idPage"));
             ProcessOrder beanOrder = new ProcessOrder();
             String username = (String) session.getAttribute("USERNAME");
             beanOrder.setUsername(username);
@@ -52,21 +54,31 @@ public class LoadAllOrderUserController extends HttpServlet {
                     beanOrder.setOrderID(order.getOrderID());
                     order.setAllLine(beanOrder.getAllLineOfOrder());
                 }
-                url=SUCCESS;
+                url = SUCCESS;
                 request.setAttribute("LIST_ORDER", mylist);
                 ProcessServiceInProcess service = new ProcessServiceInProcess();
                 service.setUsername(username);
-                ArrayList<ServiceProcessDTO> listService = (ArrayList<ServiceProcessDTO>)service.getServiceOfUSer();
-                if(listService != null){
+                ArrayList<ServiceProcessDTO> listService = (ArrayList<ServiceProcessDTO>) service.getServiceOfUSer();
+                List<ServiceProcessDTO> listSplit = null;
+                if (listService != null) {
                     url = SUCCESS;
-                    request.setAttribute("LIST_SERVICE", listService);
-                }
-                else{
+                    int numberItem = listService.size();
+                    int numberPage = numberItem % 5 == 0 ? numberItem / 5 : (numberItem / 5) + 1;
+                    request.setAttribute("NUMBER_PAGE", numberPage);
+                    if (5 * idPage > listService.size()) {
+                        newCount = listService.size();
+                        listSplit = (List<ServiceProcessDTO>) listService.subList(5 * idPage - 5, newCount);
+
+                    } else {
+                        listSplit = (List<ServiceProcessDTO>) listService.subList(5 * idPage - 5, 5 * idPage);
+
+                    }
+                    request.setAttribute("LIST_SERVICE", listSplit);
+                } else {
                     url = ERROR;
                     request.setAttribute("ERROR", "Falied");
                 }
-            }
-            else{
+            } else {
                 request.setAttribute("ERROR", "FALIED");
             }
         } catch (Exception e) {

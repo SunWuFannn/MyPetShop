@@ -48,7 +48,6 @@ public class AdminViewOrderController extends HttpServlet {
                 bean.setOrderID(orderDTO.getOrderID());
                 orderDTO.setAllLine(bean.getAllLineOfOrder());
             }
-            System.out.println("Size of All : " + listOrder.size());
             int numberItem = listOrder.size();
             int numberPage = numberItem % 5 == 0 ? numberItem / 5 : (numberItem / 5) + 1;
             request.setAttribute("NUMBER_PAGE", numberPage);
@@ -58,7 +57,6 @@ public class AdminViewOrderController extends HttpServlet {
 
             } else {
                 listSplit = (List<OrderDTO>) listOrder.subList(5 * idPage - 5, 5 * idPage);
-
             }
             request.setAttribute("LIST_ORDER", listSplit);
             url = SUCCESS;

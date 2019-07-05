@@ -45,6 +45,7 @@ public class RegisterController extends HttpServlet {
             String password = request.getParameter("txtPassword");
             String passwordConfirm = request.getParameter("txtPasswordConfirm");
             String fullname = request.getParameter("txtFullname");
+            System.out.println("hi");
             if (username.length() == 0) {
                 errAccount.setErrorUsername("Cant empty Username");
                 valid = false;
@@ -66,6 +67,9 @@ public class RegisterController extends HttpServlet {
                     valid = false;
                     errAccount.setErrorPassword("Not Match Password.");
                     request.setAttribute("ERROR_ACCOUNT", errAccount);
+                    if(request.getParameter("state").toString().equals("admin")){
+                        url = FALIED2;
+                    }
                 }
                 if (valid) {
                     ProcessAccount bean = new ProcessAccount();

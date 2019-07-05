@@ -107,6 +107,11 @@
                                 <td>${process.dateBook}</td>
                             </tr>
                         </c:forEach>
+                        <ul class="pagination">
+                            <c:forEach var="i" begin="1" end="${requestScope.NUMBER_PAGE}" step="1">
+                                <li class="page-item"><a class="page-link" href="LoadAllOrderUserController?idPage=${i}">${i}</a></li>
+                                </c:forEach>
+                        </ul>
                     </table>
                 </c:if>
             </div>

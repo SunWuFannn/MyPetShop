@@ -13,14 +13,17 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author 99hai
  */
 public class AdminDeleteController extends HttpServlet {
+
     private static final String SUCCESS = "LoadAccessoryAdmin?idPage=1";
     private static final String ERROR = "error.jsp";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -40,20 +43,19 @@ public class AdminDeleteController extends HttpServlet {
             ProcessAccessory bean = new ProcessAccessory();
             bean.setAccessoryID(accessoryID);
             valid = bean.deleteAccessory();
-            if(valid){
+            if (valid) {
                 url = SUCCESS;
-            }
-            else{
+                HttpSession session = request.getSession();
+                session.setAttribute("CHECK", 1);
+            } else {
                 request.setAttribute("ERROR", "Delete Falied");
             }
         } catch (Exception e) {
-            log("Error at Delete Controller : " +e.getMessage());
-        }
-        finally{
-            if(valid){
+            log("Error at Delete Controller : " + e.getMessage());
+        } finally {
+            if (valid) {
                 response.sendRedirect(url);
-            }
-            else{
+            } else {
                 request.getRequestDispatcher(url).forward(request, response);
             }
         }
