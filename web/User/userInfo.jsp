@@ -27,41 +27,43 @@
             </button>
             <div class="collapse navbar-collapse" id="collapsibleNavId">
                 <ul class="navbar-nav mr-auto ">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="index.jsp">Home <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="LoadAccessoryUserController">Accessory</a>
-                    </li>
-                    <c:if test="${sessionScope.FULLNAME == null}">
+                    <c:if test="${sessionScope.ROLE != 'admin'}">
                         <li class="nav-item active">
-                            <a class="nav-link" href="Auth/login.jsp">Login</a>
+                            <a class="nav-link" href="index.jsp">Home <span class="sr-only">(current)</span></a>
                         </li>
-                    </c:if>
-                    <c:if test="${sessionScope.FULLNAME == null}">
                         <li class="nav-item active">
-                            <a class="nav-link" href="Auth/register.jsp">Register</a>
+                            <a class="nav-link" href="LoadAccessoryUserController">Accessory</a>
                         </li>
-                    </c:if>
-                    <c:if test="${sessionScope.FULLNAME != null}">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Hello ${sessionScope.FULLNAME}</a>
-                        </li>
-                    </c:if>
-                    <c:if test="${sessionScope.FULLNAME != null}">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="/PETWATER/LogoutController">Logout</a>
-                        </li>
-                    </c:if>
-                    <c:if test="${sessionScope.FULLNAME != null}">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="Pet/addPet.jsp">Sent your Pet</a>
-                        </li>
-                    </c:if>
-                    <c:if test="${sessionScope.FULLNAME != null}">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="LoadPetController">view your Pet</a>
-                        </li>
+                        <c:if test="${sessionScope.FULLNAME == null}">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="Auth/login.jsp">Login</a>
+                            </li>
+                        </c:if>
+                        <c:if test="${sessionScope.FULLNAME == null}">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="Auth/register.jsp">Register</a>
+                            </li>
+                        </c:if>
+                        <c:if test="${sessionScope.FULLNAME != null}">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Hello ${sessionScope.FULLNAME}</a>
+                            </li>
+                        </c:if>
+                        <c:if test="${sessionScope.FULLNAME != null}">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="/PETWATER/LogoutController">Logout</a>
+                            </li>
+                        </c:if>
+                        <c:if test="${sessionScope.FULLNAME != null}">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="Pet/addPet.jsp">Sent your Pet</a>
+                            </li>
+                        </c:if>
+                        <c:if test="${sessionScope.FULLNAME != null}">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="LoadPetController">view your Pet</a>
+                            </li>
+                        </c:if>
                     </c:if>
                 </ul>
             </div>
