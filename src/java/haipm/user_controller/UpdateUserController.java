@@ -25,7 +25,7 @@ public class UpdateUserController extends HttpServlet {
     private static final String SUCCESS = "index.jsp";
     private static final String FALIED = "User/userInfo.jsp";
     private static final String ERROR = "error.jsp";
-
+    private static final String SUCCESS2 = "LoadAccessoryAdmin?idPage=1";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -66,6 +66,9 @@ public class UpdateUserController extends HttpServlet {
                 valid = bean.updateAccount();
                 if(valid){
                     url = SUCCESS;
+                    if(session.getAttribute("ROLE").equals("admin")){
+                        url = SUCCESS2;
+                    }
                     session.setAttribute("FULLNAME", bean.getAccount().getFullname());
                 }
                 else{

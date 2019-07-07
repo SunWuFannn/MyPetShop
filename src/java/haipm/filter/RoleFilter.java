@@ -16,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -134,6 +135,16 @@ public class RoleFilter implements Filter {
                 if (controller.contains("User") || controller.equals("addPet.jsp") || controller.equals("LoadPetController")) {
                     if (controller.equals("addPet.jsp")) {
                         url = "/error.jsp";
+                    }
+                    if (controller.equals("LoadUserInfoController")) {
+                        url = controller;
+                        req.getRequestDispatcher(url).forward(request, response);
+                        return;
+                    }
+                    if (controller.equals("UpdateUserController")) {
+                        url = controller;
+                        req.getRequestDispatcher(url).forward(request, response);
+                        return;
                     }
                     if (controller.contains("AdminBanUserController") || controller.contains("AdminUnBanUserController")) {
                         url = controller;

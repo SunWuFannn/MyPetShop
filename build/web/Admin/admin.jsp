@@ -89,6 +89,12 @@
                             Register Admin
                         </a>
                     </li>
+                    <li>
+                        <a href="LoadUserInfoController">
+                            <i class="fa fa-paperclip"></i>
+                            ProFile
+                        </a>
+                    </li>
                 </ul>
             </nav>
             <div id="content">
