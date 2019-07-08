@@ -22,6 +22,21 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/Admin/CSS/modal.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/Admin/CSS/style4.css">
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/Admin/CSS/main.css">
+        <script type="text/javascript">
+            function noBack()
+            {
+                window.history.forward()
+            }
+            noBack();
+            window.onload = noBack;
+            window.onpageshow = function (evt) {
+                if (evt.persisted)
+                    noBack()
+            }
+            window.onunload = function () {
+                void (0)
+            }
+        </script>
     </head>
     <body>
         <div class="wrapper">
@@ -118,8 +133,9 @@
                                             <td>${process.username}</td>
                                             <td>${process.slot}</td>
                                             <td>${process.total}</td>
-                                            <td><span class="badge badge-<c:if test='${process.finished}'>success</c:if><c:if test='${!process.finished}'>danger</c:if>" style="width: 100px;">
-                                                    <c:if test='${process.finished}'>Done</c:if>
+                                            <td><span class="badge badge-<c:if test='${process.finished and process.state}'>success</c:if><c:if test='${!process.state}'>danger</c:if>" style="width: 100px;">
+                                                    <c:if test='${process.finished and process.state}'>Done</c:if>
+                                                    <c:if test='${!process.state}'>Cancel</c:if>
                                                     </span></td>
                                                 <td>${process.dateBook}</td>
                                         </tr>

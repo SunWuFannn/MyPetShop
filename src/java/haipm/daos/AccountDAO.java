@@ -162,7 +162,6 @@ public class AccountDAO implements Serializable {
                 wallet = rs.getFloat("Wallet");
                 status = rs.getString("Status").equals("1") ? true : false;
                 dto = new AccountDTO(username, role, fullname, phone, address, wallet, status);
-                System.out.println(dto.toString());
                 mylist.add(dto);
             }
         } finally {

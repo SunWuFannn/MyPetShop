@@ -18,6 +18,7 @@ public class ServiceProcessDTO implements Serializable {
     private float total;
     private boolean finished;
     private int idprocess;
+    private boolean state;
 
     public int getIdprocess() {
         return idprocess;
@@ -85,6 +86,14 @@ public class ServiceProcessDTO implements Serializable {
 
     public void setFinished(boolean finished) {
         this.finished = finished;
+    }
+
+    public boolean getState() {
+        return state;
+    }
+
+    public void setState(boolean state) {
+        this.state = state;
     }
 
 }

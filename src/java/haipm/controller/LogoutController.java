@@ -17,8 +17,10 @@ import javax.servlet.http.HttpServletResponse;
  * @author 99hai
  */
 public class LogoutController extends HttpServlet {
+
     private static final String ERROR = "error.jsp";
     private static final String SUCCESS = "index.jsp";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -33,14 +35,16 @@ public class LogoutController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            if(request.getSession().getAttribute("FULLNAME") != null){
+            if (request.getSession().getAttribute("FULLNAME") != null) {
                 request.getSession().invalidate();
                 url = SUCCESS;
+                response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+                response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+                response.setHeader("Expires", "0"); // Proxies.
             }
         } catch (Exception e) {
             log("Error At Logout Controller : " + e.getMessage());
-        }
-        finally{
+        } finally {
             response.sendRedirect(url);
         }
     }

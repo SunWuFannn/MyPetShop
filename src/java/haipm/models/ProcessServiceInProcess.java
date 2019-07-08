@@ -64,7 +64,11 @@ public class ProcessServiceInProcess implements Serializable {
         ServiceProcessDAO dao = new ServiceProcessDAO();
         return dao.finishedProcess(idProcess);
     }
-
+    //cancel
+    public boolean cancelProcess() throws Exception{
+        ServiceProcessDAO dao = new ServiceProcessDAO();
+        return dao.CancelProcess(idProcess);
+    }
     //get Finished Process;
     public List<ServiceProcessDTO> getFinishedProcess() throws Exception {
         ServiceProcessDAO dao = new ServiceProcessDAO();

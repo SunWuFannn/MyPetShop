@@ -47,8 +47,8 @@ public class ServiceProcessDAO implements Serializable {
         boolean check = false;
         try {
             conn = MyConnection.getConnection();
-            String sql = "Insert into tbl_ServiceInProcess(Username,ServiceID,dateBook,slot,total,Finished)  "
-                    + "values(?,?,?,?,?,?)";
+            String sql = "Insert into tbl_ServiceInProcess(Username,ServiceID,dateBook,slot,total,Finished,State)  "
+                    + "values(?,?,?,?,?,?,?)";
             preStm = conn.prepareStatement(sql);
             preStm.setString(1, process.getUsername());
             preStm.setString(2, process.getServiceID());
@@ -56,6 +56,7 @@ public class ServiceProcessDAO implements Serializable {
             preStm.setInt(4, process.getSlot());
             preStm.setFloat(5, process.getTotal());
             preStm.setString(6, process.isFinished() ? "1" : "0");
+            preStm.setString(7, "1");
             check = preStm.executeUpdate() > 0;
         } finally {
             closeConnection();
@@ -110,6 +111,23 @@ public class ServiceProcessDAO implements Serializable {
         return check;
     }
 
+    public boolean CancelProcess(int idProccess) throws Exception {
+        boolean check = false;
+        try {
+            conn = MyConnection.getConnection();
+            String sql = "Update tbl_ServiceInProcess set Finished = ? , State = ? where IDProcess = ?";
+            preStm = conn.prepareStatement(sql);
+            preStm.setString(1, "1");
+            preStm.setString(2, "0");
+            preStm.setInt(3, idProccess);
+            check = preStm.executeUpdate() > 0;
+        } finally {
+            closeConnection();
+        }
+
+        return check;
+    }
+
     public List<ServiceProcessDTO> getFinishedProcess() throws Exception {
         List<ServiceProcessDTO> mylist = null;
         String username, serviceID, date;
@@ -118,7 +136,7 @@ public class ServiceProcessDAO implements Serializable {
         ServiceProcessDTO service = null;
         try {
             conn = MyConnection.getConnection();
-            String sql = "Select Username,ServiceID,dateBook,slot,total,IDProcess from tbl_ServiceInProcess where Finished = ? ";
+            String sql = "Select Username,ServiceID,dateBook,slot,total,IDProcess,Finished,State from tbl_ServiceInProcess where Finished = ? ";
             preStm = conn.prepareStatement(sql);
             preStm.setString(1, "1");
             rs = preStm.executeQuery();
@@ -131,6 +149,12 @@ public class ServiceProcessDAO implements Serializable {
                 IDProcess = rs.getInt("IDProcess");
                 total = rs.getFloat("total");
                 service = new ServiceProcessDTO(username, serviceID, date, slot, total, true);
+                if(rs.getString("State").equals("0")){
+                    service.setState(false);
+                }
+                else{
+                    service.setState(true);
+                }
                 service.setIdprocess(IDProcess);
                 mylist.add(service);
             }
@@ -140,14 +164,14 @@ public class ServiceProcessDAO implements Serializable {
 
         return mylist;
     }
-    
-    public List<ServiceProcessDTO> getServiceOfUSer(String username) throws Exception{
+
+    public List<ServiceProcessDTO> getServiceOfUSer(String username) throws Exception {
         List<ServiceProcessDTO> mylist = null;
-        String serviceID,date;
-        int slot,IDprocess;
+        String serviceID, date;
+        int slot, IDprocess;
         float total;
         boolean finished;
-        ServiceProcessDTO dto =null;
+        ServiceProcessDTO dto = null;
         try {
             conn = MyConnection.getConnection();
             String sql = "Select ServiceID,dateBook,slot,total,IDProcess,Finished from tbl_ServiceInProcess where Username= ?";
@@ -155,7 +179,7 @@ public class ServiceProcessDAO implements Serializable {
             preStm.setString(1, username);
             rs = preStm.executeQuery();
             mylist = new ArrayList<ServiceProcessDTO>();
-            while(rs.next()){
+            while (rs.next()) {
                 serviceID = rs.getString("ServiceID");
                 date = rs.getString("dateBook");
                 slot = rs.getInt("slot");
@@ -168,7 +192,7 @@ public class ServiceProcessDAO implements Serializable {
         } finally {
             closeConnection();
         }
-        
+
         return mylist;
     }
 }

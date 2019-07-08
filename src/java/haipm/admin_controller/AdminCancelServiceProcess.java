@@ -5,12 +5,11 @@
  */
 package haipm.admin_controller;
 
-import haipm.dtos.AccountDTO;
-import haipm.models.ProcessAccount;
+import haipm.dtos.ServiceDTO;
+import haipm.models.ProcessService;
+import haipm.models.ProcessServiceInProcess;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,10 +20,10 @@ import javax.servlet.http.HttpSession;
  *
  * @author 99hai
  */
-public class AdminManageAccount extends HttpServlet {
+public class AdminCancelServiceProcess extends HttpServlet {
 
+    private static final String SUCCESS = "AdminManageServiceProcessController";
     private static final String ERROR = "error.jsp";
-    private static final String SUCCESS = "Admin/adminManageAccount.jsp";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,34 +38,40 @@ public class AdminManageAccount extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
+        boolean valid = false;
         try {
-            int pageID = Integer.parseInt(request.getParameter("idPage"));
-            List<AccountDTO> listSplit = null;
-            ProcessAccount bean = new ProcessAccount();
-            ArrayList<AccountDTO> mylist = (ArrayList<AccountDTO>)bean.getAllUser();
-            if (mylist.size() >= 0) {
-                url = SUCCESS;
-                int numberOfAll = mylist.size();
-                int numberOfPage = numberOfAll % 5 == 0 ? (numberOfAll / 5) : (numberOfAll / 5) + 1;
-                request.setAttribute("NUMBER_PAGE", numberOfPage);
-                if (5 * pageID > mylist.size()) {
-                    listSplit = (List<AccountDTO>) mylist.subList(5 * pageID - 5, mylist.size());
+            String serviceID = request.getParameter("serviceID");
+            int slot = Integer.parseInt(request.getParameter("slot"));
+            int idProcess = Integer.parseInt(request.getParameter("idProcess"));
+            ProcessService bean = new ProcessService();
+            bean.setServiceID(serviceID);
+            ServiceDTO service = bean.findByKey();
+            bean.setService(service);
+            bean.setSlot(slot);
+            bean.increaseSlot();
+            valid = bean.updateService();
+            if (valid) {
+                ProcessServiceInProcess beanProcess = new ProcessServiceInProcess();
+                beanProcess.setIdProcess(idProcess);
+                valid = beanProcess.cancelProcess();
+                if (valid) {
+                    url = SUCCESS;
+                    HttpSession session = request.getSession();
+                    session.setAttribute("CHECK", 1);
                 } else {
-                    listSplit = (List<AccountDTO>) mylist.subList(5 * pageID - 5, 5 * pageID);
-                }
-                request.setAttribute("LIST_USER", listSplit);
-                HttpSession session = request.getSession();
-                if (session.getAttribute("CHECK") != null) {
-                    request.setAttribute("CHECK", 1);
-                    session.removeAttribute("CHECK");
+                    request.setAttribute("ERROR", "error when admin cancel service");
                 }
             } else {
-                request.setAttribute("ERROR", "Fail to load list user");
+                request.setAttribute("ERROR", "error when admin cancel service");
             }
         } catch (Exception e) {
-            log("Error at AdminManageAccount Controller: " + e.getMessage());
+            log("Error at AdminFinishedServiceProcess : " + e.getMessage());
         } finally {
-            request.getRequestDispatcher(url).forward(request, response);
+            if (valid) {
+                response.sendRedirect(url);
+            } else {
+                request.getRequestDispatcher(url).forward(request, response);
+            }
         }
     }
 

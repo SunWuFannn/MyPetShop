@@ -23,6 +23,21 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/Admin/CSS/style4.css">
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/Admin/CSS/main.css">
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script type="text/javascript">
+            function noBack()
+            {
+                window.history.forward()
+            }
+            noBack();
+            window.onload = noBack;
+            window.onpageshow = function (evt) {
+                if (evt.persisted)
+                    noBack()
+            }
+            window.onunload = function () {
+                void (0)
+            }
+        </script>
     </head>
     <body>
         <div class="wrapper">
@@ -132,8 +147,16 @@
                                                     <c:param name="slot" value="${process.slot}"/>
                                                     <c:param name="idProcess" value ="${process.idprocess}" />
                                                 </c:url>
-                                            <td><a href="${FinishedLink}" class="btn btn-success <c:if test="${process.finished}">disabled</c:if>">Finished Process</td>
-                                            </tr>
+                                                <c:url var="CancelLink" value="AdminCancelServiceProcess">
+                                                    <c:param name="serviceID" value="${process.serviceID}"/>
+                                                    <c:param name="slot" value="${process.slot}"/>
+                                                    <c:param name="idProcess" value ="${process.idprocess}" />
+                                                </c:url>
+                                            <td>
+                                                <a href="${FinishedLink}" class="btn btn-success">Finished Process</a>
+                                                <a href="${CancelLink}" class="btn btn-danger">Cancel</a>        
+                                            </td>
+                                        </tr>
                                     </c:forEach>
                                 </table>
                             </c:if>
