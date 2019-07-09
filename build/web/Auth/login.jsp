@@ -37,6 +37,7 @@
                     </div>
                     <input type="submit" class="btn btn-success" name="action" value="Login">
                 </form>
+                <a href="register.jsp">Register new account</a>
             </div>
         </div>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

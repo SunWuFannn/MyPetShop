@@ -47,6 +47,7 @@
                     </div>
                     <input type="submit" class="btn btn-primary" name="action" value="Register" >
                 </form>
+                <a href="login.jsp">Login now</a>
             </div>
         </div>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

@@ -17,6 +17,21 @@
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/Pet/CSS/viewPet_css.css">
+        <script type="text/javascript">
+            function noBack()
+            {
+                window.history.forward()
+            }
+            noBack();
+            window.onload = noBack;
+            window.onpageshow = function (evt) {
+                if (evt.persisted)
+                    noBack()
+            }
+            window.onunload = function () {
+                void (0)
+            }
+        </script>
     </head>
     <body>
         <nav class="navbar navbar-expand-sm navbar-light bg-light">
