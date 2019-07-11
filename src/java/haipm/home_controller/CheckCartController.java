@@ -86,35 +86,37 @@ public class CheckCartController extends HttpServlet {
                             break;
                         }
                     }
-                    ProcessAccount acc = new ProcessAccount();
-                    acc.setUsername(session.getAttribute("USERNAME").toString());
-                    Float wallet = acc.getWallet();
-                    if (wallet > cart.getTotal()) {
-                        wallet = wallet - cart.getTotal();
-                        acc.setCost(wallet);
-                        valid = acc.cashWallet();
-                    } else {
-                        valid = false;
-                    }
                     if (valid) {
-                        for (Map.Entry<String, AccessoryDTO> entry : cart.getCart().entrySet()) {
-                            bean.setAccessoryID(entry.getValue().getAccessID());
-                            bean.setQuantity(entry.getValue().getQuantity());
-                            int afterBuy = bean.countQuantityAfterBuy();
-                            bean.setQuantity(afterBuy);
-                            if (!bean.updateQuantity()) {
-                                url = ERROR;
-                                return;
-                            }
+                        ProcessAccount acc = new ProcessAccount();
+                        acc.setUsername(session.getAttribute("USERNAME").toString());
+                        Float wallet = acc.getWallet();
+                        if (wallet > cart.getTotal()) {
+                            wallet = wallet - cart.getTotal();
+                            acc.setCost(wallet);
+                            valid = acc.cashWallet();
+                        } else {
+                            valid = false;
                         }
                         if (valid) {
-                            url = SUCCESS;
+                            for (Map.Entry<String, AccessoryDTO> entry : cart.getCart().entrySet()) {
+                                bean.setAccessoryID(entry.getValue().getAccessID());
+                                bean.setQuantity(entry.getValue().getQuantity());
+                                int afterBuy = bean.countQuantityAfterBuy();
+                                bean.setQuantity(afterBuy);
+                                if (!bean.updateQuantity()) {
+                                    url = ERROR;
+                                    return;
+                                }
+                            }
+                            if (valid) {
+                                url = SUCCESS;
+                            } else {
+                                url = FALIED;
+                            }
                         } else {
                             url = FALIED;
+                            request.setAttribute("WALLET", 3);
                         }
-                    } else {
-                        url = FALIED;
-                        request.setAttribute("WALLET", 3);
                     }
                 }
             }

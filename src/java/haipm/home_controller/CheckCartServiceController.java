@@ -12,6 +12,7 @@ import haipm.models.ProcessAccount;
 import haipm.models.ProcessService;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -48,52 +49,88 @@ public class CheckCartServiceController extends HttpServlet {
         ErrorService errSer = new ErrorService();
         try {
             ServiceCart cart = (ServiceCart) session.getAttribute("CART_SERVICE");
-            ProcessService bean = new ProcessService();
-            if (session.getAttribute("USERNAME") == null) {
-                session.setAttribute("LOGIN_TO_SERVICE", "LoadServiceUser");
-                isLogin = false;
-            }
-            if (isLogin) {
-                ProcessAccount acc = new ProcessAccount();
-                acc.setUsername(session.getAttribute("USERNAME").toString());
-                Float wallet = acc.getWallet();
-                if (wallet > cart.getTotalServicePriceInCart()) {
-                    wallet = wallet - cart.getTotalServicePriceInCart();
-                    acc.setCost(wallet);
-                    valid = acc.cashWallet();
+            String quantity[] = request.getParameterValues("txtAccessQuantity");
+            ArrayList<String> listKey = new ArrayList<String>();
+            int i = 0;
+            for (ServiceDTO item : cart.getServiceCart().values()) {
+                if (Integer.parseInt(quantity[i]) == 0) {
+                    listKey.add(item.getServiceID());
                 } else {
-                    valid = false;
+                    item.setSlot(Integer.parseInt(quantity[i]));
                 }
-                if (valid) {
-                    for (ServiceDTO service : cart.getServiceCart().values()) {
-                        bean.setServiceID(service.getServiceID());
-                        dto = bean.findByKey();
-                        bean.setService(dto);
-                        bean.setSlot(service.getSlot());
-                        if (bean.checkSlot()) {
-                            valid = true;
-                            bean.updateSlot();
-                            valid = bean.updateService();
-                        } else {
-                            errSer.setErrSlot("Out of Slot !");
-                            request.setAttribute("ERROR_CART", errSer);
-                            valid = false;
-                            break;
-                        }
+                i++;
+            }
+            for (String key : listKey) {
+                cart.getServiceCart().remove(key);
+//                System.out.println(key);
+            }
+            if (cart.getServiceCart().size() > 0) {
+                ProcessService bean = new ProcessService();
+                if (session.getAttribute("USERNAME") == null) {
+                    session.setAttribute("LOGIN_TO_SERVICE", "LoadServiceUser");
+                    isLogin = false;
+                }
+                if (isLogin) {
+                    ProcessAccount acc = new ProcessAccount();
+                    acc.setUsername(session.getAttribute("USERNAME").toString());
+                    Float wallet = acc.getWallet();
+                    if (wallet > cart.getTotalServicePriceInCart()) {
+                        wallet = wallet - cart.getTotalServicePriceInCart();
+                        acc.setCost(wallet);
+                        valid = acc.cashWallet();
+                    } else {
+                        valid = false;
                     }
                     if (valid) {
-                        url = SUCCESS;
-                    }
-                    else{
+                        for (ServiceDTO service : cart.getServiceCart().values()) {
+                            bean.setServiceID(service.getServiceID());
+                            dto = bean.findByKey();
+                            bean.setService(dto);
+                            bean.setSlot(service.getSlot());
+                            if (bean.checkSlot()) {
+                                valid = true;
+                            } else {
+                                errSer.setErrSlot("Out of Slot !");
+                                request.setAttribute("ERROR_CART", errSer);
+                                valid = false;
+                                break;
+                            }
+                        }
+                        if (valid) {
+                            for (ServiceDTO service : cart.getServiceCart().values()) {
+                                bean.setServiceID(service.getServiceID());
+                                dto = bean.findByKey();
+                                bean.setService(dto);
+                                bean.setSlot(service.getSlot());
+                                if (bean.checkSlot()) {
+                                    valid = true;
+                                    bean.updateSlot();
+                                    valid = bean.updateService();
+                                } else {
+                                    errSer.setErrSlot("Out of Slot !");
+                                    request.setAttribute("ERROR_CART", errSer);
+                                    valid = false;
+                                    break;
+                                }
+                            }
+                            if (valid) {
+                                url = SUCCESS;
+                            } else {
+                                url = FALIED;
+                            }
+                        } else {
+                            url = FALIED;
+                        }
+                    } else {
                         url = FALIED;
+                        session.setAttribute("WALLET", 3);
                     }
                 } else {
-                    url = FALIED;
-                    session.setAttribute("WALLET", 3);
+                    url = "Auth/login.jsp";
+                    valid = false;
                 }
             } else {
-                url = "Auth/login.jsp";
-                valid = false;
+                url = FALIED;
             }
         } catch (Exception e) {
             log("Error at CheckCartServiceController : " + e.getMessage());

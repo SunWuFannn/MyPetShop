@@ -64,23 +64,23 @@
                             <form action="/PETWATER/AdminAddServiceController" method="POST">
                                 <table>
                                     <tr>
-                                        <td><p>Order ID</p></td>
-                                        <td><input type="text" name="txtServiceID" /></td>
+                                        <td><p>Service ID</p></td>
+                                        <td><input type="text" name="txtServiceID" required="true" /></td>
                                         <td><font color="red">${requestScope.ERROR_SERVICE.errID}</font></td>
                                     </tr>
                                     <tr>
-                                        <td><p>Order Name</p></td>
-                                        <td><input type="text" name="txtServiceName" /></td>
+                                        <td><p>Service Name</p></td>
+                                        <td><input type="text" name="txtServiceName" required="true"/></td>
                                         <td><font color="red">${requestScope.ERROR_SERVICE.errName}</font></td>
                                     </tr>
                                     <tr>
                                         <td><p>Slot</p></td>
-                                        <td><input type="number" name="txtSlot" /></td>
+                                        <td><input type="number" min="1" name="txtSlot" required="true"/></td>
                                         <td><font color="red">${requestScope.ERROR_SERVICE.errSlot}</font></td>
                                     </tr>
                                     <tr>
                                         <td><p>Price</p></td>
-                                        <td><input type="number" name="txtPrice" /></td>
+                                        <td><input type="number" min="1" name="txtPrice" required="true"/></td>
                                         <td><font color="red">${requestScope.ERROR_SERVICE.errPrice}</font></td>
                                     </tr>
                                     <tr>
@@ -90,7 +90,7 @@
                                     </tr>
                                     <tr>
                                         <td><p>Date Schedual</p></td>
-                                        <td><input type="text" name="txtDate" /></td>
+                                        <td><input type="text" name="txtDate" required="true"/></td>
                                         <td><font color="red">${requestScope.ERROR_SERVICE.errDate}</font></td>
                                     </tr>
                                     <tr>

@@ -89,7 +89,7 @@
                     <font color="red">${requestScope.ERROR_PET.errorID}</font><br/>
                     <p>Pet Name</p><input type="text" name="txtPetName" /><br/>
                     <font color="red">${requestScope.ERROR_PET.errorName}</font><br/>
-                    <p>Pet Age</p><input type="text" name="txtPetAge" /><br/>
+                    <p>Pet Age</p><input type="number" min="1" name="txtPetAge" /><br/>
                     <font color="red">${requestScope.ERROR_PET.errorAge}</font><br/>
                     <p>Type</p>: <select name="txtPetType">
                         <option value="choose">Choose Type</option>
