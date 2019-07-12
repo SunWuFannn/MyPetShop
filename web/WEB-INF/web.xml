@@ -200,6 +200,14 @@
         <servlet-name>AdminCancelServiceProcess</servlet-name>
         <servlet-class>haipm.admin_controller.AdminCancelServiceProcess</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdminSearchOrder</servlet-name>
+        <servlet-class>haipm.admin_controller.AdminSearchOrder</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminSearchService</servlet-name>
+        <servlet-class>haipm.admin_controller.AdminSearchService</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -391,6 +399,14 @@
     <servlet-mapping>
         <servlet-name>AdminCancelServiceProcess</servlet-name>
         <url-pattern>/AdminCancelServiceProcess</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminSearchOrder</servlet-name>
+        <url-pattern>/AdminSearchOrder</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminSearchService</servlet-name>
+        <url-pattern>/AdminSearchService</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

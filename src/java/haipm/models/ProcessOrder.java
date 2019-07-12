@@ -23,8 +23,17 @@ public class ProcessOrder implements Serializable {
     private OrderDTO order;
     private OrderLineAccessory line;
     private String username;
+    private String dateSearch;
 
     public ProcessOrder() {
+    }
+
+    public String getDateSearch() {
+        return dateSearch;
+    }
+
+    public void setDateSearch(String dateSearch) {
+        this.dateSearch = dateSearch;
     }
 
     public String getUsername() {
@@ -87,6 +96,11 @@ public class ProcessOrder implements Serializable {
     public List<OrderDTO> getAllOrder() throws Exception {
         OrderDAO dao = new OrderDAO();
         return dao.getAllOrder();
+    }
+
+    public List<OrderDTO> searchOrder() throws Exception {
+        OrderDAO dao = new OrderDAO();
+        return dao.searchByDate(dateSearch);
     }
 
     public ArrayList<String> getAllLineOfOrder() throws Exception {

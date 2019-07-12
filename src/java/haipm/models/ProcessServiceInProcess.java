@@ -19,6 +19,15 @@ public class ProcessServiceInProcess implements Serializable {
     private ServiceProcessDTO serviceProcess;
     private int idProcess;
     private String username;
+    private String searchDate;
+
+    public String getSearchDate() {
+        return searchDate;
+    }
+
+    public void setSearchDate(String searchDate) {
+        this.searchDate = searchDate;
+    }
 
     public String getUsername() {
         return username;
@@ -64,22 +73,27 @@ public class ProcessServiceInProcess implements Serializable {
         ServiceProcessDAO dao = new ServiceProcessDAO();
         return dao.finishedProcess(idProcess);
     }
+
     //cancel
-    public boolean cancelProcess() throws Exception{
+    public boolean cancelProcess() throws Exception {
         ServiceProcessDAO dao = new ServiceProcessDAO();
         return dao.CancelProcess(idProcess);
     }
+
     //get Finished Process;
     public List<ServiceProcessDTO> getFinishedProcess() throws Exception {
         ServiceProcessDAO dao = new ServiceProcessDAO();
         return dao.getFinishedProcess();
     }
-    
+
     //get service of user
-    
-    public List<ServiceProcessDTO> getServiceOfUSer() throws Exception{
+    public List<ServiceProcessDTO> getServiceOfUSer() throws Exception {
         ServiceProcessDAO dao = new ServiceProcessDAO();
         return dao.getServiceOfUSer(username);
     }
 
+    public List<ServiceProcessDTO> searchService() throws Exception {
+        ServiceProcessDAO dao = new ServiceProcessDAO();
+        return dao.searchService(searchDate);
+    }
 }

@@ -149,17 +149,17 @@ public class ServiceProcessDAO implements Serializable {
                 IDProcess = rs.getInt("IDProcess");
                 total = rs.getFloat("total");
                 service = new ServiceProcessDTO(username, serviceID, date, slot, total, true);
-                if(rs.getString("State").equals("0")){
+                if (rs.getString("State").equals("0")) {
                     service.setState(false);
-                }
-                else{
+                } else {
                     service.setState(true);
                 }
                 service.setIdprocess(IDProcess);
                 mylist.add(service);
             }
 
-        } catch (Exception e) {
+        } finally {
+            closeConnection();
         }
 
         return mylist;
@@ -187,8 +187,46 @@ public class ServiceProcessDAO implements Serializable {
                 IDprocess = rs.getInt("IDProcess");
                 finished = rs.getString("Finished").equals("1") ? true : false;
                 dto = new ServiceProcessDTO(username, serviceID, date, slot, total, finished);
+                dto.setIdprocess(IDprocess);
                 mylist.add(dto);
             }
+        } finally {
+            closeConnection();
+        }
+
+        return mylist;
+    }
+
+    public List<ServiceProcessDTO> searchService(String date) throws Exception {
+        List<ServiceProcessDTO> mylist = null;
+        String username, serviceID;
+        int slot, IDProcess;
+        float total;
+        ServiceProcessDTO service = null;
+        try {
+            conn = MyConnection.getConnection();
+            String sql = "Select Username,ServiceID,dateBook,slot,total,IDProcess,Finished,State from tbl_ServiceInProcess where Finished = ? and dateBook = ?";
+            preStm = conn.prepareStatement(sql);
+            preStm.setString(1, "1");
+            preStm.setString(2, date);
+            rs = preStm.executeQuery();
+            mylist = new ArrayList<ServiceProcessDTO>();
+            while (rs.next()) {
+                username = rs.getString("Username");
+                serviceID = rs.getString("ServiceId");
+                slot = rs.getInt("slot");
+                IDProcess = rs.getInt("IDProcess");
+                total = rs.getFloat("total");
+                service = new ServiceProcessDTO(username, serviceID, date, slot, total, true);
+                if (rs.getString("State").equals("0")) {
+                    service.setState(false);
+                } else {
+                    service.setState(true);
+                }
+                service.setIdprocess(IDProcess);
+                mylist.add(service);
+            }
+
         } finally {
             closeConnection();
         }

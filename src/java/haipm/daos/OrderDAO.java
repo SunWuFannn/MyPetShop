@@ -200,4 +200,30 @@ public class OrderDAO implements Serializable {
         return mylist;
     }
 
+    public List<OrderDTO> searchByDate(String date) throws Exception {
+        List<OrderDTO> mylist = null;
+        String username;
+        float total;
+        int orderID;
+        OrderDTO order = null;
+        try {
+            conn = MyConnection.getConnection();
+            String sql = "Select OrderID,Username,Total,DateOrder from tbl_Order where DateOrder = ?";
+            preStm = conn.prepareStatement(sql);
+            preStm.setString(1, date);
+            rs = preStm.executeQuery();
+            mylist = new ArrayList<OrderDTO>();
+            while (rs.next()) {
+                orderID = rs.getInt("OrderID");
+                username = rs.getString("Username");
+                total = rs.getFloat("Total");
+                order = new OrderDTO(username, date, total);
+                order.setOrderID(orderID);
+                mylist.add(order);
+            }
+        } finally {
+            closeConnection();
+        }
+        return mylist;
+    }
 }

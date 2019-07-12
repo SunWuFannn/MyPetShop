@@ -110,8 +110,20 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="input-group date w-50">
+                            <form action="AdminSearchOrder" method="POST">
+                                <input type="date" name="txtDate" class="form-control">
+                                <div class="input-group-addon">
+                                    <span class="glyphicon glyphicon-th"></span>
+                                </div>
+                                <input type="submit" class="btn btn-success" value="Search"/>
+                            </form>
+                        </div>
+                        <!--                        <form action="AdminSearchOrderDay" method="POST">
+                                                    <input type="date" name="txtDate" /><br/>
+                                                    <input type="submit" class="btn btn-success" value="Search"/>
+                                                </form>-->
                         <div class="card-body">
-
                             <c:if test="${requestScope.LIST_ORDER != null}">
                                 <table class="table table-bordered table-hover myTable">
                                     <thead class="text-primary">
